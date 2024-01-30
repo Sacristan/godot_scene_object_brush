@@ -1,4 +1,4 @@
-Object drawer is a 3D addon tool for the [Godot game engine][god]. It's meant to ease the placement of scenes (ref Unity prefab drawers). I was not in a mood to do all the manual work to create a nice tree scenery, therefore i did what any sane (or not) developer would do - create a tool for that.
+Scene Object brush is a 3D addon drawing tool for the [Godot game engine][god]. It's meant to ease the placement of scenes (ref Unity prefab drawers). I was not in a mood to do all the manual work to create a nice tree scenery, therefore i did what any sane (or not) developer would do - create a tool for that.
 
 <img alt="Object Brush in Action" src="resources/godot_object_brush_action.gif">
 
