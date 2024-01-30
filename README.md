@@ -11,6 +11,9 @@ Scene Object brush is a 3D addon drawing tool for the [Godot game engine][god]. 
 
 <img alt="Brush node" src="resources/brush_node.png">
 
+## Which Godot versions are supported ? 
+Godot 4.0+ (could backport to Godot 3 LTS at some point)
+
 ## Are there bugs?
 Most likely
 
