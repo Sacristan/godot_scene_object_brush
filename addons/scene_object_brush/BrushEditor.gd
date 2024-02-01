@@ -14,7 +14,7 @@ enum ButtonStatus {RELEASED, PRESSED}
 var drawStatus = ButtonStatus.RELEASED
 var eraseStatus = ButtonStatus.RELEASED
 
-const Brush = preload("res://addons/object_brush/Brush.gd")
+const Brush = preload("Brush.gd")
 
 var drawCursor: bool = false
 var drawnEver: bool = false

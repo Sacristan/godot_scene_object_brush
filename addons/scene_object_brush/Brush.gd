@@ -21,7 +21,7 @@ class_name Brush
 const indicatorHeight := 0.25
 
 var cursorPos: Vector3
-const IndicatorShader: Shader = preload("res://addons/object_brush/indicator.gdshader")
+const IndicatorShader: Shader = preload("indicator.gdshader")
 
 func getRandomSize():
 	return randf_range(minSize, maxSize)
