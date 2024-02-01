@@ -4,6 +4,7 @@ plugin_icon.png.import
 icon.png.import
 
 # Godot-specific ignores
+*.import
 .import/
 export.cfg
 export_presets.cfg
