@@ -2,26 +2,28 @@
 extends Node3D
 class_name Brush
 
-@export_category("Brush Settings")
+## Brush size in meters
 @export var brushSize : float = 1
+## Spawned objects per x 
 @export var brushDensity : int = 10
-@export var useSurfaceNormal := true
-@export var limitToBody: StaticBody3D = null
 
 @export_category("Paintable Settings")
+## Scene (asset) to paint
 @export var paintableObject: PackedScene
-#@export_group("Paintable size")
-@export var minSize: float = 0.8
+@export var minSize: float = 1
 @export var maxSize: float = 1
 
-@export_group("Random Rot")
+@export_group("Paintable Random Rotation")
 @export var randomRotMin := Vector3.ZERO
 @export var randomRotMax := Vector3.ZERO
 
-const indicatorHeight := 0.25
+@export_category("OPTIONAL Brush Settings")
+## Limit brush to certain static bodies, leave empty for any static body
+@export var limitToBodies: Array[StaticBody3D]
 
-var cursorPos: Vector3
+const indicatorHeight := 0.25
 const IndicatorShader: Shader = preload("indicator.gdshader")
+var cursorPos: Vector3
 
 func getRandomSize():
 	return randf_range(minSize, maxSize)

@@ -24,6 +24,7 @@ var _isDrawDirty := true
 var _isEraseDirty := true
 
 ## TODO
+## benchmark tool 
 ## customisable indicator color
 ## support non-planar surfaces
 ## multiple allowed surfaces
@@ -189,16 +190,20 @@ func test() -> bool:
 	if result:
 		if result.collider:
 			#print("Collided with: ", result.collider.name)
-			
-			if(brush.limitToBody):
-				print(brush.limitToBody, result.collider)
+			if(brush.limitToBodies.size() > 0):
+				var found: bool = false
 				
-				if(brush.limitToBody != result.collider):
+				for body in brush.limitToBodies:
+					#print(body, result.collider)
+					if(body == result.collider):
+						found = true
+						break;
+				
+				if(!found):
 					return false
 					
 			mouseHitPoint = result.position
 			mouseHitNormal = result.normal
-			
 			return true
 			
 	return false
