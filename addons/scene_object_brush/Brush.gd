@@ -4,7 +4,7 @@ class_name Brush
 
 ## Brush size in meters
 @export var brushSize : float = 1
-## Spawned objects per x 
+## Spawned objects per brush radius 
 @export var brushDensity : int = 10
 
 @export_category("Paintable Settings")
@@ -12,6 +12,7 @@ class_name Brush
 @export var paintableObject: PackedScene
 @export var minSize: float = 1
 @export var maxSize: float = 1
+@export var projectOnSurfaceNormal := false
 
 @export_group("Paintable Random Rotation")
 @export var randomRotMin := Vector3.ZERO

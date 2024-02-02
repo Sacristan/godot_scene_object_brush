@@ -149,15 +149,22 @@ func draw():
 func spawnObject(pos: Vector3):
 	var result: Dictionary = raycastTestPos(pos)
 	var canPlace: bool = result.wasHit
-	var finalPos: Vector3 = result.hitPos
 	#print(result)
 	
 	if(canPlace):
+		var finalPos: Vector3 = result.hitResult.position
+		var normal: Vector3 = result.hitResult.normal
+		
+		brush.draw_line(finalPos, finalPos + normal * 3, Color.CYAN, 3 * 60)
+		
+		var rot: Quaternion = Quaternion.from_euler(brush.getRotation())
+		#rot = normal * rot
+			
 		var obj: Node3D = brush.paintableObject.instantiate()
 		brush.add_child(obj)
 		obj.owner = get_tree().get_edited_scene_root()
 		obj.position = finalPos
-		obj.rotation = brush.getRotation()
+		obj.rotation = rot.get_euler()
 		obj.scale = Vector3.ONE * brush.getRandomSize()
 		obj.name = brush.name + "_" + getUnixTimestamp()
 
@@ -168,12 +175,12 @@ func raycastTestPos(pos: Vector3) -> Dictionary:
 	
 	brush.draw_line(params.from, params.to, Color.YELLOW, 3 * 60)
 	
-	var result = brush.get_world_3d().direct_space_state.intersect_ray(params)
+	var result := brush.get_world_3d().direct_space_state.intersect_ray(params)
 	
 	if result:
-		return { "wasHit": true, "hitPos": result.position}
+		return { "wasHit": true, "hitResult": result }
 		
-	return { "wasHit": false, "hitPos": Vector3.ZERO }
+	return { "wasHit": false, "hitResult": result }
 
 func test() -> bool:
 	
