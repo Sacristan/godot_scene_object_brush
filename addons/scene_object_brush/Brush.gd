@@ -9,7 +9,7 @@ class_name Brush
 
 @export_category("Paintable Settings")
 ## Scene (asset) to paint
-@export var paintableObject: PackedScene
+@export var paintableObjects: Array[PackedScene]
 @export var minSize: float = 1
 @export var maxSize: float = 1
 @export var projectOnSurfaceNormal := false
@@ -28,6 +28,14 @@ var cursorPos: Vector3
 
 func getRandomSize():
 	return randf_range(minSize, maxSize)
+
+func getRandomObjectIndex():
+	return randf_range(0, paintableObjects.size())
+
+func isPaintableObjectsValid() -> bool:
+	if (paintableObjects.any(func(obj): return obj == null)):
+		paintableObjects = paintableObjects.filter(func(obj): return obj != null)
+	return paintableObjects.size() != 0
 	
 func getRotation():
 	var x = randf_range(deg_to_rad(randomRotMin.x), deg_to_rad(randomRotMax.x))
