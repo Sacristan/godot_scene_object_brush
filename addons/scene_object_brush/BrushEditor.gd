@@ -24,10 +24,7 @@ var _isDrawDirty := true
 var _isEraseDirty := true
 
 ## TODO
-## benchmark tool 
-## customisable indicator color
-## support non-planar surfaces
-## undo https://docs.godotengine.org/en/stable/classes/class_undoredo.html
+## benchmark tool
 
 var prevMouseHitPoint: Vector3:
 	get:
@@ -153,19 +150,17 @@ func spawnObject(pos: Vector3):
 	if(canPlace):
 		var finalPos: Vector3 = result.hitResult.position
 		var normal: Vector3 = result.hitResult.normal
-		
+		var rotatedNormal: Vector3 = Quaternion.from_euler(brush.getRotation()) * normal
+
 		brush.draw_line(finalPos, finalPos + normal * 3, Color.CYAN, 3 * 60)
-		
-		var rot: Quaternion = Quaternion.from_euler(brush.getRotation())
-		#rot = normal * rot
+		brush.draw_line(finalPos, finalPos + rotatedNormal * 3, Color.MAGENTA, 3 * 60)
 		
 		var obj: Node3D = brush.paintableObject.instantiate()
 		brush.add_child(obj)
 		obj.owner = get_tree().get_edited_scene_root()
 		obj.position = finalPos
 
-		#obj.rotation = brush.getRotation()
-		obj.rotation = rot.get_euler()
+		obj.global_transform.basis = align_up(obj.global_transform.basis, rotatedNormal)
 		
 		obj.scale = Vector3.ONE * brush.getRandomSize()
 		obj.name = brush.name + "_" + getUnixTimestamp()
@@ -229,3 +224,17 @@ func drawCursorIndicator(radius: float, color: Color):
 	
 func getUnixTimestamp() -> String:
 	return str(Time.get_unix_time_from_system())
+
+# ref: https://github.com/Yog-Shoggoth/Intersection_Test/blob/master/Intersect.gd
+func align_up(node_basis: Basis, normal: Vector3):
+	node_basis.y = normal
+	var potential_z = -node_basis.x.cross(normal)
+	var potential_x = -node_basis.z.cross(normal)
+	if potential_z.length() > potential_x.length():
+		node_basis.x = potential_z
+	else:
+		node_basis.x = potential_x
+	node_basis.z = node_basis.x.cross(node_basis.y)
+	node_basis = node_basis.orthonormalized()
+	
+	return node_basis
