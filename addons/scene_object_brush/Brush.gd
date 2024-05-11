@@ -4,7 +4,7 @@ class_name Brush
 
 ## Brush size in meters
 @export var brushSize : float = 1
-## Spawned objects per brush radius 
+## Spawned objects in brush area
 @export var brushDensity : int = 10
 
 @export_category("Paintable Settings")
@@ -12,7 +12,6 @@ class_name Brush
 @export var paintableObject: PackedScene
 @export var minSize: float = 1
 @export var maxSize: float = 1
-@export var projectOnSurfaceNormal := false
 
 @export_group("Paintable Random Rotation")
 @export var randomRotMin := Vector3.ZERO
@@ -35,7 +34,6 @@ func getRotation():
 	var z = randf_range(deg_to_rad(randomRotMin.z), deg_to_rad(randomRotMax.z))
 	
 	return Vector3(x, y, z)
-
 
 #TODO: optimise
 func draw_line(pos1: Vector3, pos2: Vector3, color = Color.WHITE_SMOKE, persist_frames: int = 1):

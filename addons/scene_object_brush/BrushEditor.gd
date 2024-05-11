@@ -27,7 +27,6 @@ var _isEraseDirty := true
 ## benchmark tool 
 ## customisable indicator color
 ## support non-planar surfaces
-## multiple allowed surfaces
 ## undo https://docs.godotengine.org/en/stable/classes/class_undoredo.html
 
 var prevMouseHitPoint: Vector3:
@@ -60,7 +59,7 @@ func _exit_tree():
 func _process(delta):
 	if(lastDrawnMouseOverlayPos.distance_to(mouseOverlayPos) > 0.0001):
 		lastDrawnMouseOverlayPos = mouseOverlayPos
-		drawCursor = test()
+		drawCursor = testCursorSurface()
 
 	if(drawCursor):
 		drawHit()
@@ -159,15 +158,19 @@ func spawnObject(pos: Vector3):
 		
 		var rot: Quaternion = Quaternion.from_euler(brush.getRotation())
 		#rot = normal * rot
-			
+		
 		var obj: Node3D = brush.paintableObject.instantiate()
 		brush.add_child(obj)
 		obj.owner = get_tree().get_edited_scene_root()
 		obj.position = finalPos
+
+		#obj.rotation = brush.getRotation()
 		obj.rotation = rot.get_euler()
+		
 		obj.scale = Vector3.ONE * brush.getRandomSize()
 		obj.name = brush.name + "_" + getUnixTimestamp()
 
+# used to test whether to spawn an object over cursor
 func raycastTestPos(pos: Vector3) -> Dictionary:
 	var params = PhysicsRayQueryParameters3D.new()
 	params.from = pos + Vector3.UP
@@ -182,8 +185,8 @@ func raycastTestPos(pos: Vector3) -> Dictionary:
 		
 	return { "wasHit": false, "hitResult": result }
 
-func test() -> bool:
-	
+# used to test whether to display cursor over a surface
+func testCursorSurface() -> bool:
 	var from = editorCamera.global_position
 	var dir = editorCamera.project_ray_normal(mouseOverlayPos)
 	var to = from + dir * 1000
