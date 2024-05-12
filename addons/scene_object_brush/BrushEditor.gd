@@ -44,12 +44,12 @@ func _handles(object):
 	return false
 
 func _enter_tree():
-	print("editor _enter_tree")
+	#print("editor _enter_tree")
 	add_custom_type("Brush", "Node3D", Brush, null)
 	set_process(true)
 #
 func _exit_tree():
-	print("editor_exit_tree")
+	#print("editor_exit_tree")
 	remove_custom_type("Brush")
 	set_process(false)
 	
@@ -144,7 +144,7 @@ func draw():
 
 func spawnObject(pos: Vector3):
 	var result: Dictionary = raycastTestPos(pos, mouseHitNormal)
-	var canPlace: bool = result.wasHit
+	var canPlace: bool = result.wasHit && brush.isPaintableObjectsValid()
 	#print(result)
 	
 	if(canPlace):
@@ -155,7 +155,8 @@ func spawnObject(pos: Vector3):
 		brush.draw_debug_ray(finalPos, finalPos + normal * 3, Color.BLUE)
 		brush.draw_debug_ray(finalPos, finalPos + rotatedNormal * 3, Color.CYAN)
 		
-		var obj: Node3D = brush.paintableObject.instantiate()
+		var obj := get_random_object() as Node3D
+
 		brush.add_child(obj)
 		obj.owner = get_tree().get_edited_scene_root()
 		obj.position = finalPos
@@ -164,6 +165,10 @@ func spawnObject(pos: Vector3):
 		
 		obj.scale = Vector3.ONE * brush.getRandomSize()
 		obj.name = brush.name + "_" + getUnixTimestamp()
+
+
+func get_random_object() -> Node3D:
+	return brush.paintableObjects[brush.getRandomObjectIndex()].instantiate()
 
 # used to test whether to spawn an object over cursor
 func raycastTestPos(pos: Vector3, normal: Vector3) -> Dictionary:
