@@ -34,15 +34,23 @@ func getRandomSize():
 	return randf_range(minSize, maxSize)
 
 func get_random_paintable() -> Node3D:
-	var index := randi_range(0, paintableObjects.size()-1)
+	cleanPaintableObjects()
 	
-	print(index)
-	return paintableObjects[index].instantiate()
-
-func isPaintableObjectsValid() -> bool:
-	if (paintableObjects.any(func(obj): return obj == null)):
-		paintableObjects = paintableObjects.filter(func(obj): return obj != null)
-	return paintableObjects.size() != 0
+	if(paintableObjects == null || paintableObjects.size() == 0):
+		return null
+	
+	var index := randi_range(0, paintableObjects.size()-1)
+	var obj := paintableObjects[index]
+	
+	if(obj == null):
+		return null
+	
+	return obj.instantiate()
+	
+func cleanPaintableObjects():
+	if(paintableObjects != null):
+		if (paintableObjects.any(func(obj): return obj == null)):
+			paintableObjects = paintableObjects.filter(func(obj): return obj != null)
 	
 func getRotation():
 	var x = randf_range(deg_to_rad(randomRotMin.x), deg_to_rad(randomRotMax.x))

@@ -23,9 +23,6 @@ var _prevMouseHitPoint := Vector3.ZERO
 var _isDrawDirty := true
 var _isEraseDirty := true
 
-## TODO
-## benchmark tool
-
 var prevMouseHitPoint: Vector3:
 	get:
 		return _prevMouseHitPoint
@@ -144,7 +141,7 @@ func draw():
 
 func spawnObject(pos: Vector3):
 	var result: Dictionary = raycastTestPos(pos, mouseHitNormal)
-	var canPlace: bool = result.wasHit && brush.isPaintableObjectsValid()
+	var canPlace: bool = result.wasHit
 	#print(result)
 	
 	if(canPlace):
@@ -156,6 +153,9 @@ func spawnObject(pos: Vector3):
 		brush.draw_debug_ray(finalPos, finalPos + rotatedNormal * 3, Color.CYAN)
 		
 		var obj := brush.get_random_paintable()
+		
+		if(obj == null):
+			return
 
 		brush.add_child(obj)
 		obj.owner = get_tree().get_edited_scene_root()
