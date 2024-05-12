@@ -23,9 +23,6 @@ var _prevMouseHitPoint := Vector3.ZERO
 var _isDrawDirty := true
 var _isEraseDirty := true
 
-## TODO
-## benchmark tool
-
 var prevMouseHitPoint: Vector3:
 	get:
 		return _prevMouseHitPoint
@@ -44,12 +41,12 @@ func _handles(object):
 	return false
 
 func _enter_tree():
-	print("editor _enter_tree")
+	#print("editor _enter_tree")
 	add_custom_type("Brush", "Node3D", Brush, null)
 	set_process(true)
 #
 func _exit_tree():
-	print("editor_exit_tree")
+	#print("editor_exit_tree")
 	remove_custom_type("Brush")
 	set_process(false)
 	
@@ -155,7 +152,11 @@ func spawnObject(pos: Vector3):
 		brush.draw_debug_ray(finalPos, finalPos + normal * 3, Color.BLUE)
 		brush.draw_debug_ray(finalPos, finalPos + rotatedNormal * 3, Color.CYAN)
 		
-		var obj: Node3D = brush.paintableObject.instantiate()
+		var obj := brush.get_random_paintable()
+		
+		if(obj == null):
+			return
+
 		brush.add_child(obj)
 		obj.owner = get_tree().get_edited_scene_root()
 		obj.position = finalPos
