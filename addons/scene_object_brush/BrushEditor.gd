@@ -168,8 +168,13 @@ func spawnObject(pos: Vector3):
 
 # used to test whether to spawn an object over cursor
 func raycastTestPos(pos: Vector3, normal: Vector3) -> Dictionary:
-	var params = PhysicsRayQueryParameters3D.new()
-	params.from = pos + normal * 3
+	var dir := Vector3.UP
+	
+	if(brush.useSurfaceNormal):
+		dir = normal
+	
+	var params := PhysicsRayQueryParameters3D.new()
+	params.from = pos + dir * 3
 	params.to = pos
 	
 	brush.draw_debug_ray(params.from, params.to, Color.YELLOW)

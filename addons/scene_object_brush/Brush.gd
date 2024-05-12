@@ -13,11 +13,14 @@ class_name Brush
 @export var minSize: float = 1
 @export var maxSize: float = 1
 
+## Use Surface normal or Vector.UP for projection
+@export var useSurfaceNormal := true
+
 @export_group("Paintable Random Rotation")
 @export var randomRotMin := Vector3.ZERO
 @export var randomRotMax := Vector3.ZERO
 
-@export_group("Cursor")
+@export_group("Cursor Indicator")
 @export var cursorInnerColor := Color.RED
 @export var cursorOuterColor := Color.DARK_BLUE
 
