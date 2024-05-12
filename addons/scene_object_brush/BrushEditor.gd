@@ -143,7 +143,7 @@ func draw():
 		spawnObject(spawnPos)
 
 func spawnObject(pos: Vector3):
-	var result: Dictionary = raycastTestPos(pos)
+	var result: Dictionary = raycastTestPos(pos, mouseHitNormal)
 	var canPlace: bool = result.wasHit
 	#print(result)
 	
@@ -166,9 +166,9 @@ func spawnObject(pos: Vector3):
 		obj.name = brush.name + "_" + getUnixTimestamp()
 
 # used to test whether to spawn an object over cursor
-func raycastTestPos(pos: Vector3) -> Dictionary:
+func raycastTestPos(pos: Vector3, normal: Vector3) -> Dictionary:
 	var params = PhysicsRayQueryParameters3D.new()
-	params.from = pos + Vector3.UP
+	params.from = pos + normal
 	params.to = pos
 	
 	brush.draw_line(params.from, params.to, Color.YELLOW, 3 * 60)
