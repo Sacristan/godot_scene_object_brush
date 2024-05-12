@@ -152,8 +152,8 @@ func spawnObject(pos: Vector3):
 		var normal: Vector3 = result.hitResult.normal
 		var rotatedNormal: Vector3 = Quaternion.from_euler(brush.getRotation()) * normal
 
-		brush.draw_line(finalPos, finalPos + normal * 3, Color.CYAN, 3 * 60)
-		brush.draw_line(finalPos, finalPos + rotatedNormal * 3, Color.MAGENTA, 3 * 60)
+		brush.draw_debug_ray(finalPos, finalPos + normal * 3, Color.BLUE)
+		brush.draw_debug_ray(finalPos, finalPos + rotatedNormal * 3, Color.CYAN)
 		
 		var obj: Node3D = brush.paintableObject.instantiate()
 		brush.add_child(obj)
@@ -168,10 +168,10 @@ func spawnObject(pos: Vector3):
 # used to test whether to spawn an object over cursor
 func raycastTestPos(pos: Vector3, normal: Vector3) -> Dictionary:
 	var params = PhysicsRayQueryParameters3D.new()
-	params.from = pos + normal
+	params.from = pos + normal * 3
 	params.to = pos
 	
-	brush.draw_line(params.from, params.to, Color.YELLOW, 3 * 60)
+	brush.draw_debug_ray(params.from, params.to, Color.YELLOW)
 	
 	var result := brush.get_world_3d().direct_space_state.intersect_ray(params)
 	

@@ -20,6 +20,7 @@ class_name Brush
 @export_category("OPTIONAL Brush Settings")
 ## Limit brush to certain static bodies, leave empty for any static body
 @export var limitToBodies: Array[StaticBody3D]
+@export var drawDebugRays := false 
 
 const indicatorHeight := 0.25
 const IndicatorShader: Shader = preload("indicator.gdshader")
@@ -34,6 +35,10 @@ func getRotation():
 	var z = randf_range(deg_to_rad(randomRotMin.z), deg_to_rad(randomRotMax.z))
 	
 	return Vector3(x, y, z)
+
+func draw_debug_ray(pos1: Vector3, pos2: Vector3, color: Color):
+	if(drawDebugRays):
+		draw_line(pos1, pos2, color, 3 * 60)
 
 #TODO: optimise
 func draw_line(pos1: Vector3, pos2: Vector3, color = Color.WHITE_SMOKE, persist_frames: int = 1):
