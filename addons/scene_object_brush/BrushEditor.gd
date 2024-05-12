@@ -214,10 +214,10 @@ func testCursorSurface() -> bool:
 	return false
 	
 func drawHit():
-	drawCursorIndicator(0.1, Color.RED)
+	drawCursorIndicator(0.1, brush.cursorInnerColor)
 
 func drawBrush():
-	drawCursorIndicator(brush.brushSize, Color.DARK_BLUE)
+	drawCursorIndicator(brush.brushSize, brush.cursorOuterColor)
 	
 func drawCursorIndicator(radius: float, color: Color):
 	brush.draw_sphere(mouseHitPoint, radius, color)

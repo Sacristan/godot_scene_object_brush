@@ -17,6 +17,10 @@ class_name Brush
 @export var randomRotMin := Vector3.ZERO
 @export var randomRotMax := Vector3.ZERO
 
+@export_group("Cursor")
+@export var cursorInnerColor := Color.RED
+@export var cursorOuterColor := Color.DARK_BLUE
+
 @export_category("OPTIONAL Brush Settings")
 ## Limit brush to certain static bodies, leave empty for any static body
 @export var limitToBodies: Array[StaticBody3D]
