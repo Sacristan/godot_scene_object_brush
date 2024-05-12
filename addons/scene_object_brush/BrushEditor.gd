@@ -155,7 +155,7 @@ func spawnObject(pos: Vector3):
 		brush.draw_debug_ray(finalPos, finalPos + normal * 3, Color.BLUE)
 		brush.draw_debug_ray(finalPos, finalPos + rotatedNormal * 3, Color.CYAN)
 		
-		var obj := get_random_object() as Node3D
+		var obj := brush.get_random_paintable()
 
 		brush.add_child(obj)
 		obj.owner = get_tree().get_edited_scene_root()
@@ -165,10 +165,6 @@ func spawnObject(pos: Vector3):
 		
 		obj.scale = Vector3.ONE * brush.getRandomSize()
 		obj.name = brush.name + "_" + getUnixTimestamp()
-
-
-func get_random_object() -> Node3D:
-	return brush.paintableObjects[brush.getRandomObjectIndex()].instantiate()
 
 # used to test whether to spawn an object over cursor
 func raycastTestPos(pos: Vector3, normal: Vector3) -> Dictionary:

@@ -33,8 +33,11 @@ var cursorPos: Vector3
 func getRandomSize():
 	return randf_range(minSize, maxSize)
 
-func getRandomObjectIndex():
-	return randf_range(0, paintableObjects.size())
+func get_random_paintable() -> Node3D:
+	var index := randi_range(0, paintableObjects.size()-1)
+	
+	print(index)
+	return paintableObjects[index].instantiate()
 
 func isPaintableObjectsValid() -> bool:
 	if (paintableObjects.any(func(obj): return obj == null)):
