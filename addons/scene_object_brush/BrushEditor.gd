@@ -188,6 +188,9 @@ func raycastTestPos(pos: Vector3, normal: Vector3) -> Dictionary:
 
 # used to test whether to display cursor over a surface
 func testCursorSurface() -> bool:
+	if(editorCamera == null):
+		return false
+	
 	var from = editorCamera.global_position
 	var dir = editorCamera.project_ray_normal(mouseOverlayPos)
 	var to = from + dir * 1000
